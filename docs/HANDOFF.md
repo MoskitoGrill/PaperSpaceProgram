@@ -81,3 +81,11 @@ Skutečné lokální kontroly: typecheck OK, lint OK, Vitest 3/3 OK, běžný bu
 Stav odeslání a vzdáleného nasazení bude přidán po skutečném běhu. Ruční cesta po nasazení: https://moskitogrill.github.io/PaperSpaceProgram/ → Vývojový tester → Spustit, poté stejné kroky SYS-001 v TEST_SCENARIOS. Další funkční etapa nadále orbitální pohyb po domluvě.
 
 **Výsledek vzdáleného nasazení:** commit 7ab95de odeslán na main. Actions run https://github.com/MoskitoGrill/PaperSpaceProgram/actions/runs/43910626545 — checks success, deploy success. Tím se vzdáleně ověřily i Chromium/Firefox E2E na Linuxu (3 testy × 2 prohlížeče). Přímý smoke test veřejného https://moskitogrill.github.io/PaperSpaceProgram/ přes Chromium: PASS, build 0.1.0+7ab95de-test, spuštění tick 0 → 3 kroky/0,05 s → reset → krok/menu/nové spuštění tick 0, žádné pageerror ani HTTP >=400. Dočasný ověřovací skript je v ignorované .tools; produkční testy jsou v tests/e2e. Lokální relativní Markdown odkazy OK a git diff --check OK. Doplnění výsledku je samostatný dokumentační commit [skip ci], ponechává ověřenou nasazenou sestavu 7ab95de beze změny.
+
+## 16. 11. 2026 — uživatelská akceptace a uzavření chatu 02
+
+**Stav: dokončeno.** Uživatel po nasazení a předání ručního postupu potvrdil „funguje“ a požádal o zápis výsledků před přechodem na chat 03. Zapsáno jako souhrnné ruční potvrzení veřejné verze; neodvozujeme z něj konkrétní prohlížeč ani samostatné výsledky každého kroku. Žádný nový problém nebyl nahlášen. Automatické výsledky a nasazený build 7ab95de zůstávají doložené výše.
+
+Změny pouze v dokumentaci: PROJECT_STATE (akceptace a uzavření), HANDOFF (tento zápis), TEST_SCENARIOS (potvrzení SYS-001) a nový CHAT_03.md (kopírovatelné zadání úvodní domluvy orbitálního pohybu). Žádný herní kód, nový scénář ani změna numerických rozhodnutí. Chat 03 má nejprve domluvit metodu, ovládání a přesnost, nikoli předpokládat schválení starších návrhů.
+
+Kontroly tohoto zápisu: existence cílových souborů, relativní Markdown odkazy a git diff --check; výsledky ověřeny před commitem. Build ani herní testy se kvůli čistě dokumentační změně neopakovaly. Dokumentace se synchronizuje commitem [skip ci], nasazená sestava se nemění.

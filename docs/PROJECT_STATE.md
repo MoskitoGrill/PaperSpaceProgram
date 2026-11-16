@@ -1,6 +1,6 @@
 # Aktuální stav projektu
 
-Aktualizováno 16. 11. 2026: kostra a izolovaný SYS-001 dokončeny, připraven veřejný testovací Pages build na výslovný souhlas uživatele.
+Aktualizováno 16. 11. 2026: chat 02 dokončen. Kostra a SYS-001 nasazeny na Pages; uživatel potvrdil, že veřejná verze funguje.
 
 ## Dostupné funkce
 
@@ -22,5 +22,6 @@ Lokální Firefox dříve nešel spustit kvůli hostitelské validaci mozglue.dl
 
 ## Další krok
 
-Po úspěšném nasazení otevřít cílový odkaz → Vývojový tester → Spustit: tick 0, 3 kroky = 0,05 s, reset na 0, návrat do menu a nové spuštění od 0. Detail v README a TEST_SCENARIOS. Potom domluvit chat 03: kruhová/eliptická orbita a ORB-001, bez předčasného warpu/editoru/3D.
+Uživatel 16. 11. 2026 potvrdil „funguje“. Jde o souhrnné ruční potvrzení nasazené verze, nikoli doložený výpis jednotlivých kroků nebo údaj o jeho prohlížeči. Žádný nový problém nehlásí. Chat 02 je uzavřen.
 
+Otevřít chat 03 podle [CHAT_03.md](CHAT_03.md): nejprve domluvit kruhovou/eliptickou orbitu, metodu a akceptaci ORB-001; teprve po domluvě implementovat. Bez předčasného warpu/editoru/3D. Detail stávajícího SYS-001 zůstává v README a TEST_SCENARIOS.

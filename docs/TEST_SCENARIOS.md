@@ -67,3 +67,5 @@ U VIS-PLANET-001 budoucí postup ověří vzdálenou kresbu, přiblížení k pr
 ### SYS-001 ve veřejném testovacím buildu (16. 11. 2026)
 
 Po úspěšném workflow je cesta https://moskitogrill.github.io/PaperSpaceProgram/ → Vývojový tester → Spustit. Proveď stejné číslované kroky 1–5 výše: tick 0 → 3 kroky = 0,05 s → úplný reset → nové spuštění od nuly. Menu navíc označuje Veřejná testovací sestava a build ID končí -test. Stav skutečného vzdáleného nasazení viz PROJECT_STATE/HANDOFF. Automatický E2E pro Pages build provádí celý stejný životní cyklus a kontroluje i načítání dynamického tester modulu v podadresáři, chyby stránky a čisté úložiště.
+
+**Uživatelské ověření 16. 11. 2026:** po nasazení veřejné verze uživatel potvrdil, že funguje. Souhrnné potvrzení bez specifikace prohlížeče a jednotlivých kroků; žádný nový problém nehlásí. Automatické výsledky jsou samostatně v HANDOFF.
