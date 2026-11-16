@@ -35,3 +35,7 @@ GitHub Pages vyžaduje správné Vite base pro cílovou URL a build/deploy workf
 ## Upřesnění po úvodní domluvě chatu 02 — 16. 11. 2026
 
 Uživatel schválil implementaci: 2D je neaktivní bez Připravujeme, u 2D/3D označení zůstává. Zveřejnění je odložené až na funkční 2D a kompletní vzhled. Aktuálně se připravuje pouze lokální produkční sestava a CI kontrol, bez deploy workflow. Toto novější rozhodnutí upřesňuje výše uvedený počáteční hosting, nikoli izolaci testeru nebo rozsah mechanik.
+
+## Upřesnění veřejného testování — 16. 11. 2026
+
+Uživatel následně schválil veřejnou pracovní sestavu s testerem a dodal MoskitoGrill/PaperSpaceProgram. Oddělený režim Vite pages vytváří dist-pages s testerem, běžná produkce dist jej nadále vylučuje. CI po kontrolách nasazuje main. Předchozí zákaz zveřejnění kostry je tím pro veřejnou testovací verzi nahrazen; nejde o vydání dokončené hry.

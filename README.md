@@ -26,7 +26,7 @@ npm run test:e2e
 npm run preview
 ```
 
-Preview standardně běží na http://127.0.0.1:4173. Produkční sestava v `dist` neobsahuje tester, jeho přípravu světa ani spouštěcí cestu. E2E vyžaduje předchozí build, spouští vlastní servery na portech 5173 a 4173 a kontroluje i podcestu `/PaperSpaceProgram/` na obyčejném statickém serveru bez přepisování URL. Tyto porty musí být volné.
+Preview standardně běží na http://127.0.0.1:4173. Produkční sestava v `dist` neobsahuje tester, jeho přípravu světa ani spouštěcí cestu. E2E vyžaduje předchozí `npm run build` i `npm run build:pages`, spouští vlastní servery na portech 5173 a 4173 a kontroluje i podcestu `/PaperSpaceProgram/` na obyčejném statickém serveru bez přepisování URL. Tyto porty musí být volné.
 
 Lokálně prošly typy, lint, 3 testy Vitest, build, kontrola produkčního artefaktu a 2 E2E v Chromiu 159. Firefox 159 se na tomto hostiteli nespustil: Playwright hlásí chybějící `mozglue.dll` (soubor existuje, příčina validace není vyřešena). Jen ověřenou Chromium sadu spustíš `npm run test:e2e -- --project=chromium`. V prostředí Codex vyžadovaly lokální servery/prohlížeče spuštění mimo sandbox kvůli blokovaným socketům. Audit hlásí 7 moderate nálezů ve vývojovém řetězci ESLintu přes minimatch; tyto balíčky se nebalí do webové aplikace.
 
@@ -45,7 +45,7 @@ Scénář běží pouze v paměti, nic nezapisuje do localStorage/IndexedDB. Ná
 
 ## Verzování a vydání
 
-Git je lokálně inicializovaný, vzdálený repozitář není připojený. Workflow `.github/workflows/checks.yml` provádí kontroly, nic nepublikuje. Zveřejnění je na pokyn uživatele odložené až na funkční 2D a kompletní vzhled. GitHub Pages zůstává možný budoucí hosting; deploy workflow ani vzdálené nasazení nyní nejsou aktivní.
+Repozitář: https://github.com/MoskitoGrill/PaperSpaceProgram. Uživatel schválil veřejnou testovací verzi. Workflow `.github/workflows/checks.yml` po kontrolách nasazuje větev main na GitHub Pages. V Settings → Pages musí být Source: GitHub Actions. Ruční spuštění: Actions → Checks and test Pages → Run workflow (main). Aktuální výsledek nasazení viz HANDOFF.
 
 ## Projektové podklady
 
@@ -54,3 +54,10 @@ Git je lokálně inicializovaný, vzdálený repozitář není připojený. Work
 - [Roadmapa](docs/ROADMAP.md), [technický plán](docs/TECHNICAL_PLAN.md), [výtvarná identita](docs/VISUAL_IDENTITY.md)
 
 Další etapa: projednat a ověřit kruhový a eliptický orbitální pohyb. Prostorová fyzika a finální výtvarná produkce patří do pozdějších etap.
+
+
+## Veřejná testovací sestava na GitHub Pages
+
+`npm run build:pages` vytvoří `dist-pages` s testerem a označením Veřejná testovací sestava. Běžný `npm run build` stále vytváří `dist` bez testeru. Pro lokální prohlídku testovacího buildu: `npm run preview -- --outDir dist-pages`.
+
+Po úspěšném nasazení otevři https://moskitogrill.github.io/PaperSpaceProgram/ a proveď výše uvedený ruční SYS-001. Každý push na main spustí typy, lint, unit testy, oba buildy, kontrolu produkčního artefaktu a E2E. Nasazuje se pouze dist-pages, nikoli zdrojové HTML. Pokud workflow selže, předchozí web se nepřepíše. Na osobní token ani ruční npm při testování webu není potřeba; workflow používá vlastní GITHUB_TOKEN.

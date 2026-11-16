@@ -4,7 +4,7 @@ import { drawWorld } from '../render/world';
 import { createSys001 } from './scenario';
 export function showTester(app: HTMLElement, back: () => void): void {
   let session: Session | undefined;
-  app.innerHTML = `<header><p class="eyebrow">Lokální vývojový tester · 2D</p><h1>SYS-001 — Izolovaná session a reset</h1><p>Dostupný scénář. Ověřuje skutečný krok času, izolaci a úplný reset. Bez fyziky a ukládání.</p></header>
+  app.innerHTML = `<header><p class="eyebrow">Vývojový tester · 2D</p><h1>SYS-001 — Izolovaná session a reset</h1><p>Dostupný scénář. Ověřuje skutečný krok času, izolaci a úplný reset. Bez fyziky a ukládání.</p></header>
     <section><h2>Postup a očekávané výsledky</h2><ol>
     <li>Zvol Spustit. Objeví se těleso a značka lodě, tick 0 a čas 0 s.</li>
     <li>Třikrát zvol Provést jeden krok. Tick bude 3, čas 0,05 s; polohy zůstanou stejné.</li>

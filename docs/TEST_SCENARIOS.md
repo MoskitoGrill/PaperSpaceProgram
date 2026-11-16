@@ -4,7 +4,7 @@ Stav k 16. 11. 2026: SYS-001 je implementovaný v lokálním vývojovém testeru
 
 ## Pravidla testeru
 
-Tester bude dostupný ve vývojové sestavě pro autora. Veřejné zpřístupnění není požadavek; před publikací vyřešit jeho vyloučení nebo skutečné omezení přístupu. Samotné skryté tlačítko není zabezpečení. Žádný server či přihlašování se kvůli němu nyní nepřidává.
+Tester je dostupný v lokálním vývoji a v uživatelem schválené veřejné testovací sestavě Pages. Běžný produkční build jej neobsahuje. Testovací sestava nemá omezení přístupu ani přihlašování.
 
 Každý scénář vytvoří vlastní izolovanou session s pevným seedem/verzí a stavem světa, případně vlastními body a záznamy misí. Reset obnoví celý scénář, ne jen loď či kameru. Běžné světy ani jejich autosave se nesmějí přepsat. Scénář běží nad skutečným herním jádrem a nevyžaduje ruční hraní předcházející mise. Přechod zpět do menu musí bezpečně ukončit testovací session.
 
@@ -61,4 +61,9 @@ U VIS-PLANET-001 budoucí postup ověří vzdálenou kresbu, přiblížení k pr
 
 **Automatizace:** Vitest kontroluje tick/čas, nezměněné entity, izolaci session/snapshotů a opakovaný reset; Playwright celý průchod včetně shody Canvasu a čistého úložiště. Dostupnost prohlížečů a skutečné výsledky viz HANDOFF.
 
-**Přímá kontrola menu a sestavy (není další herní scénář):** obě volby režimů jsou neaktivní; 2D bez štítku, 2D/3D s Připravujeme. `npm run build` a `npm run preview` zobrazí menu bez testeru. `node tests/check-production.mjs` kontroluje i obsah artefaktu. E2E načítá produkci z `/PaperSpaceProgram/` bez serverového fallbacku. Nic není zveřejněné; finální vzhled a funkční hra se tím neprohlašují za dokončené.
+**Přímá kontrola menu a sestavy (není další herní scénář):** obě volby režimů jsou neaktivní; 2D bez štítku, 2D/3D s Připravujeme. `npm run build` a `npm run preview` zobrazí menu bez testeru. `node tests/check-production.mjs` kontroluje i obsah artefaktu. E2E načítá produkci z `/PaperSpaceProgram/` bez serverového fallbacku. Samostatný Pages build obsahuje tester; finální vzhled a funkční hra se tím neprohlašují za dokončené.
+
+
+### SYS-001 ve veřejném testovacím buildu (16. 11. 2026)
+
+Po úspěšném workflow je cesta https://moskitogrill.github.io/PaperSpaceProgram/ → Vývojový tester → Spustit. Proveď stejné číslované kroky 1–5 výše: tick 0 → 3 kroky = 0,05 s → úplný reset → nové spuštění od nuly. Menu navíc označuje Veřejná testovací sestava a build ID končí -test. Stav skutečného vzdáleného nasazení viz PROJECT_STATE/HANDOFF. Automatický E2E pro Pages build provádí celý stejný životní cyklus a kontroluje i načítání dynamického tester modulu v podadresáři, chyby stránky a čisté úložiště.

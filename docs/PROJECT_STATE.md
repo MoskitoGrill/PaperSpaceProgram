@@ -1,35 +1,25 @@
 # Aktuální stav projektu
 
-Aktualizováno: 16. 11. 2026. Fáze: chat 02 — lokální webová kostra implementována.
+Aktualizováno 16. 11. 2026: kostra a izolovaný SYS-001 dokončeny, připraven veřejný testovací Pages build na výslovný souhlas uživatele.
 
-## Skutečně dokončeno
+## Dostupné funkce
 
-- TypeScript strict / Vite / HTML/CSS / Canvas 2D, npm lockfile a příkazy dev, build, preview, typecheck, lint, test, test:e2e.
-- České menu s neaktivním 2D bez štítku a 2D/3D s Připravujeme, build ID a pravdivým přehledem funkcí.
-- Lokální tester: SYS-001 s návodem před spuštěním i během testu, izolovaná session v paměti, těleso a nehybná značka lodě, ruční tick / 60 a úplný reset.
-- Odděleny domain, čistý krok sim, session, renderer a vývojová fixture/UI. Žádné prázdné moduly budoucích systémů.
-- Produkční artefakt vylučuje tester včetně jeho modulů. Relativní base a navigace bez serverových rout.
-- Lokální Git inicializován, bez prvního commitu a bez remote. Git ignore a GitHub Actions pouze pro kontroly; nic se nepublikovalo.
+České menu s neaktivními režimy 2D/2D/3D, build ID a stav funkcí. Tester SYS-001 s návodem před spuštěním i během testu, izolovanou in-memory session, skutečným ručním tickem při 60 tick/s a úplným resetem. Domain, sim krok, session a renderer jsou oddělené. Bez fyziky a ukládání. Ostatní scénáře zůstávají plánované.
 
-## Ověření
+## Sestavy a hosting
 
-Node 24.22.1, pomocné npm 12.2.2; Vite 8.3.8, TypeScript 6.0.3, Vitest 5.1.0, ESLint 10.15.0, typescript-eslint 8.72.2, Playwright 1.65.1. Přesný graf závislostí v package-lock.json. Node byl dostupný bez npm; ignorovaná `.tools/package` obsahuje lokální pomocné npm. README uvádí standardní i zdejší způsob spuštění.
+- `npm run dev`: lokální vývoj s testerem.
+- `npm run build`: dist bez testeru; kontroluje tests/check-production.mjs.
+- `npm run build:pages`: dist-pages s testerem, veřejným označením a -test v build ID. Samostatný mode, žádný Vite dev server na hostingu.
+- Git main, origin https://github.com/MoskitoGrill/PaperSpaceProgram.git. Workflow Checks and test Pages kontroluje a pak nasazuje pouze main; PR nic nepublikuje. Pages Source musí být GitHub Actions (uživatel doložil nastavení).
+- Cílový odkaz: https://moskitogrill.github.io/PaperSpaceProgram/. Stav vzdáleného běhu bude doplněn po odeslání. Schválení veřejné testovací verze nahrazuje předchozí odklad zveřejnění kostry, nikoli hotové vydání hry.
 
-- typecheck: prošel.
-- lint: prošel.
-- Vitest: 3/3 prošly (tick/čas, izolace/reset, bezpečný rozsah ticku).
-- build: prošel; produkční kontrola obsahu: prošla, tester ani fixture nejsou v dist.
-- Chromium 159: 2/2 E2E prošly (celý životní cyklus SYS-001, statická produkce na Pages podcestě bez testeru). Snímek testeru vizuálně zkontrolován: čitelné popisky/návod/ovládání, žádné překryvy.
-- Firefox 159: oba E2E pokusy skončily před spuštěním prohlížeče, Playwright hlásí chybějící `mozglue.dll`. Funkčnost ve Firefoxu není ověřena; knihovna na disku existuje, příčina hostitelské validace nebyla vyřešena.
-- Relativní Markdown odkazy: prošly. `git diff --check`: prošel, ale nový repozitář má soubory dosud untracked, proto nejde o úplnou kontrolu nových souborů.
-- npm audit: 7 moderate ve vývojovém ESLint řetězci přes minimatch; žádné produkční závislosti. Nebyl použit vynucený downgrade navrhovaný auditem.
+## Ověření této změny
 
-## Co neexistuje a omezení
+Typecheck a lint prošly, Vitest 3/3, oba buildy prošly, kontrola dist bez testeru prošla. Chromium E2E 3/3: lokální SYS-001, Pages sestava SYS-001 v podadresáři včetně dynamického importu a produkční sestava bez testeru. Příkazy spuštěny místním npm přes `node .tools/package/bin/npm-cli.js`; E2E mimo sandbox kvůli lokálním socketům. Runtime a závislosti beze změny, lockfile zachován.
 
-Žádná gravitace, orbity, letové řízení, automatický čas/warp, editor, ukládání nebo herní historie. Tester nemění localStorage/IndexedDB. Finální vzhled, mobilní ovládání a 3D nejsou implementované. DOCX je archivní GDD 1.0; aktuální pravidla jsou v Markdownu.
+Lokální Firefox dříve nešel spustit kvůli hostitelské validaci mozglue.dll; tuto změnu v něm lokálně neověřujeme. CI na Linuxu má Chromium i Firefox. Z předchozího auditu zůstává 7 moderate nálezů v dev ESLint/minimatch, ne ve webovém artefaktu. Safari/mobil nejsou ověřeny.
 
-Zveřejnění je na novější pokyn uživatele odloženo až na funkční 2D a kompletní vzhled. GitHub Pages zůstává možný budoucí hosting, není připojený remote ani deploy. CI nebylo spuštěno na GitHubu. Safari a mobilní prostředí nejsou ověřeny.
+## Další krok
 
-## Následující krok
-
-Ručně ověřit SYS-001 podle README / TEST_SCENARIOS. Pak v novém chatu 03 nejprve domluvit kruhový a eliptický orbitální pohyb s přímým scénářem ORB-001 a numerickými kritérii. Rozsah numerických metod a tolerancí není schválen touto implementací. Reálný čas a warp patří do další etapy.
+Po úspěšném nasazení otevřít cílový odkaz → Vývojový tester → Spustit: tick 0, 3 kroky = 0,05 s, reset na 0, návrat do menu a nové spuštění od 0. Detail v README a TEST_SCENARIOS. Potom domluvit chat 03: kruhová/eliptická orbita a ORB-001, bez předčasného warpu/editoru/3D.

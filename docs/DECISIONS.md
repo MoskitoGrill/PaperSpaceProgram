@@ -94,3 +94,7 @@ Zdrojové adresáře, package.json, CI a závislosti budou založeny v T01 v pot
 ## 16. 11. 2026 — chat 02: upřesnění menu a zveřejnění (schváleno uživatelem)
 
 Volba 2D zůstává neaktivní bez štítku Připravujeme; u 2D/3D může štítek zůstat. Nedostupné volby nic nespouštějí. Uživatel výslovně odložil zveřejnění minimálně do funkčního 2D a chce počkat i na kompletní vzhled. To nahrazuje dřívější očekávání počátečního zveřejnění kostry na Pages: nyní pouze lokální build, kontroly a CI bez deploy. GitHub Pages může zůstat budoucím cílem; žádná vzdálená URL ani termín vydání nejsou určeny. Rozsah SYS-001 a technický základ ADR 0003 se nemění.
+
+## 16. 11. 2026 — veřejný tester na Pages (schváleno)
+
+Uživatel výslovně přijal veřejnou testovací verzi a poskytl repozitář https://github.com/MoskitoGrill/PaperSpaceProgram. To nahrazuje odložení veškerého zveřejnění: oddělený build:pages smí obsahovat tester SYS-001 a nasazovat se z main. Běžný produkční build zůstává bez testeru, vydání hotové hry se tím neprohlašuje. Žádné přihlašování, backend nebo herní mechaniky navíc.

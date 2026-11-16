@@ -1,7 +1,7 @@
-import { expect, test } from '@playwright/test';
-test('menu and isolated SYS-001 lifecycle', async ({ page }, testInfo) => {
+import { expect, test, type Page, type TestInfo } from '@playwright/test';
+async function lifecycle(page: Page, testInfo: TestInfo, url: string) {
   const errors: string[] = []; page.on('pageerror', e => errors.push(e.message));
-  await page.goto('/');
+  await page.goto(url);
   await expect(page.getByRole('button', { name: '2D', exact: true })).toBeDisabled();
   await expect(page.getByRole('button', { name: '2D/3D' })).toBeDisabled();
   await page.getByRole('button', { name: 'Vývojový tester' }).click();
@@ -25,6 +25,17 @@ test('menu and isolated SYS-001 lifecycle', async ({ page }, testInfo) => {
   expect(await page.evaluate(async () => (await indexedDB.databases()).length)).toBe(0);
   expect(errors).toEqual([]);
   await page.screenshot({ path: testInfo.outputPath('sys001.png'), fullPage: true });
+}
+test('menu and isolated SYS-001 lifecycle', async ({ page }, testInfo) => {
+  await lifecycle(page, testInfo, '/');
+});
+test('Pages test build runs the full SYS-001 lifecycle on a subpath', async ({ page }, testInfo) => {
+  const failures: string[] = [];
+  page.on('response', r => { if (r.status() >= 400) failures.push(r.url()); });
+  await lifecycle(page, testInfo, 'http://127.0.0.1:4173/testing/PaperSpaceProgram/');
+  await page.getByRole('button', { name: 'Zpět do menu' }).click();
+  await expect(page.getByText(/Veřejná testovací sestava/)).toBeVisible();
+  expect(failures).toEqual([]);
 });
 test('production loads assets on a Pages subpath and exposes no tester', async ({ page }) => {
   const failures: string[] = [];

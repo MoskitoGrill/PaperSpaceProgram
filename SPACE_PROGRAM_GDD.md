@@ -480,3 +480,7 @@ Možný budoucí tréninkový/scénářový režim s připravenými raketami je 
 ### 17.6 Chat 02 — menu a odložení zveřejnění, 16. 11. 2026
 
 SCHVÁLENO uživatelem: nedostupné 2D tlačítko bez označení Připravujeme, u 2D/3D může označení zůstat. Obě volby jsou do implementace neaktivní. Veřejné vydání odložit minimálně do funkčního 2D a počkat i na kompletní vzhled. Kostra je nyní lokální, CI nic nenasazuje; předchozí počáteční hosting Pages neurčuje vydání této kostry. Ostatní rozsah ADR 0003 zůstává zachovaný.
+
+### 17.7 Veřejná testovací verze na Pages — 16. 11. 2026
+
+SCHVÁLENO uživatelem: veřejná pracovní verze s testerem pro pohodlné testování přes odkaz. Samostatný Pages build, běžný produkční build stále bez testeru. Nahrazuje odložení zveřejnění pracovní kostry v §17.6, nikoli požadavek dokončit funkční 2D a vzhled pro hotové vydání. Repozitář MoskitoGrill/PaperSpaceProgram, automatické nasazení po kontrolách main.

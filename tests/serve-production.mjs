@@ -2,11 +2,13 @@
 import { createServer } from 'node:http';
 import { readFile } from 'node:fs/promises';
 import { resolve, extname, sep } from 'node:path';
-const root = resolve('dist');
 createServer(async (req, res) => {
   const url = new URL(req.url, 'http://localhost');
-  if (!url.pathname.startsWith('/PaperSpaceProgram/')) { res.writeHead(404).end(); return; }
-  const path = resolve(root, '.' + url.pathname.slice('/PaperSpaceProgram'.length) + (url.pathname.endsWith('/') ? 'index.html' : ''));
+  const isTest = url.pathname.startsWith('/testing/PaperSpaceProgram/');
+  const prefix = isTest ? '/testing/PaperSpaceProgram' : '/PaperSpaceProgram';
+  const root = resolve(isTest ? 'dist-pages' : 'dist');
+  if (!url.pathname.startsWith(prefix + '/')) { res.writeHead(404).end(); return; }
+  const path = resolve(root, '.' + url.pathname.slice(prefix.length) + (url.pathname.endsWith('/') ? 'index.html' : ''));
   if (!path.startsWith(root + sep)) { res.writeHead(404).end(); return; }
   try {
     const file = await readFile(path);

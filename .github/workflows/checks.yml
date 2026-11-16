@@ -1,5 +1,9 @@
-name: Local-build checks
-on: [push, pull_request, workflow_dispatch]
+name: Checks and test Pages
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
 permissions:
   contents: read
 jobs:
@@ -17,6 +21,27 @@ jobs:
       - run: npm test
       - run: npm run build
       - run: node tests/check-production.mjs
+      - run: npm run build:pages
       - run: npx playwright install --with-deps chromium firefox
       - run: npm run test:e2e
-# Intentionally no publish/deploy job: release awaits functional 2D and final visuals.
+      - uses: actions/upload-pages-artifact@v5
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+        with:
+          path: dist-pages
+  deploy:
+    needs: checks
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    concurrency:
+      group: pages
+      cancel-in-progress: false
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/configure-pages@v6
+      - uses: actions/deploy-pages@v5
+        id: deployment

@@ -69,3 +69,13 @@ Uživatel po předložení návrhu schválil implementaci s úpravou: 2D neaktiv
 **Omezení:** aplikace není hratelný let. Canvas používá jednoduché tvary a pevnou projekci; mobil/Safari nejsou ověřeny. CI workflow nebylo spuštěno na GitHubu; remote a deploy záměrně nejsou. Veřejná sestava je pouze lokální artefakt, nikoli vydání. Build ID před prvním commitem je 0.1.0+dev.
 
 **Přesné pokračování:** uživatel ručně ověří SYS-001 podle kroků v README a katalogu. Pak nový chat 03: nejprve domluvit model a akceptaci kruhové/eliptické orbity, přidat ORB-001 nad produkční simulací. Nezačínat automatický čas/warp, editor nebo prostorovou fyziku. Před podporou Firefoxu dořešit místní hostitelskou validaci; před zveřejněním nové výslovné rozhodnutí v souladu s funkčním 2D a kompletním vzhledem.
+
+## 16. 11. 2026 — veřejná testovací sestava Pages
+
+Uživatel schválil veřejné pracovní testování a poskytl repozitář MoskitoGrill/PaperSpaceProgram. Nové rozhodnutí v DECISIONS, GDD §17.7 a ADR 0003 nahrazuje odklad zveřejnění pracovní kostry. Herní rozsah zůstává SYS-001.
+
+Změněny vite.config.ts, package.json, src/main.ts (explicitní pages mode a veřejný štítek, oddělené dist-pages), src/devtools/tester.ts (obecný nadpis), .gitignore/ESLint (ignorovat artefakt), tests/serve-production.mjs a tests/e2e/shell.spec.ts (celý životní cyklus i na statické Pages sestavě). Workflow checks.yml po typecheck/lint/unit/obou buildech/kontrole dist/E2E v Chromiu i Firefoxu publikuje pouze dist-pages z main přes oficiální Pages actions; PR nenasazuje. Používá GITHUB_TOKEN s pages/id-token právy pouze v deploy jobu. Dokumentace README, scénáře a stav aktualizovány.
+
+Skutečné lokální kontroly: typecheck OK, lint OK, Vitest 3/3 OK, běžný build OK, node tests/check-production.mjs OK, build:pages OK, Chromium E2E 3/3 OK. E2E testuje krok/reset/nové spuštění, čisté úložiště, nehybný Canvas, načítání Pages chunků v podadresáři a produkci bez testeru. Lokální Firefox neopakován (dřívější chyba hostitele mozglue.dll). Runtime/závislosti se neměnily. Vzdálený main před změnou 1211082, shodný s místním; žádné přepisování historie.
+
+Stav odeslání a vzdáleného nasazení bude přidán po skutečném běhu. Ruční cesta po nasazení: https://moskitogrill.github.io/PaperSpaceProgram/ → Vývojový tester → Spustit, poté stejné kroky SYS-001 v TEST_SCENARIOS. Další funkční etapa nadále orbitální pohyb po domluvě.
