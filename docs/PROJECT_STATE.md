@@ -12,14 +12,15 @@ Aktualizováno 16. 11. 2026: kostra a izolovaný SYS-001 dokončeny, připraven 
 - `npm run build`: dist bez testeru; kontroluje tests/check-production.mjs.
 - `npm run build:pages`: dist-pages s testerem, veřejným označením a -test v build ID. Samostatný mode, žádný Vite dev server na hostingu.
 - Git main, origin https://github.com/MoskitoGrill/PaperSpaceProgram.git. Workflow Checks and test Pages kontroluje a pak nasazuje pouze main; PR nic nepublikuje. Pages Source musí být GitHub Actions (uživatel doložil nastavení).
-- Cílový odkaz: https://moskitogrill.github.io/PaperSpaceProgram/. Stav vzdáleného běhu bude doplněn po odeslání. Schválení veřejné testovací verze nahrazuje předchozí odklad zveřejnění kostry, nikoli hotové vydání hry.
+- Cílový odkaz: https://moskitogrill.github.io/PaperSpaceProgram/. Nasazení commitu 7ab95de úspěšné: Actions run 43910626545, checks i deploy success. Přímý průchod na veřejném webu v Chromiu prošel bez page/HTTP chyb; build 0.1.0+7ab95de-test. Schválení veřejné testovací verze nahrazuje předchozí odklad zveřejnění kostry, nikoli hotové vydání hry.
 
 ## Ověření této změny
 
 Typecheck a lint prošly, Vitest 3/3, oba buildy prošly, kontrola dist bez testeru prošla. Chromium E2E 3/3: lokální SYS-001, Pages sestava SYS-001 v podadresáři včetně dynamického importu a produkční sestava bez testeru. Příkazy spuštěny místním npm přes `node .tools/package/bin/npm-cli.js`; E2E mimo sandbox kvůli lokálním socketům. Runtime a závislosti beze změny, lockfile zachován.
 
-Lokální Firefox dříve nešel spustit kvůli hostitelské validaci mozglue.dll; tuto změnu v něm lokálně neověřujeme. CI na Linuxu má Chromium i Firefox. Z předchozího auditu zůstává 7 moderate nálezů v dev ESLint/minimatch, ne ve webovém artefaktu. Safari/mobil nejsou ověřeny.
+Lokální Firefox dříve nešel spustit kvůli hostitelské validaci mozglue.dll; tuto změnu v něm lokálně neověřujeme. CI na Linuxu úspěšně dokončilo celou E2E sadu pro Chromium i Firefox (3 scénáře v každém). Z předchozího auditu zůstává 7 moderate nálezů v dev ESLint/minimatch, ne ve webovém artefaktu. Safari/mobil nejsou ověřeny.
 
 ## Další krok
 
 Po úspěšném nasazení otevřít cílový odkaz → Vývojový tester → Spustit: tick 0, 3 kroky = 0,05 s, reset na 0, návrat do menu a nové spuštění od 0. Detail v README a TEST_SCENARIOS. Potom domluvit chat 03: kruhová/eliptická orbita a ORB-001, bez předčasného warpu/editoru/3D.
+

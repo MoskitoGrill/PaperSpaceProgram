@@ -45,7 +45,7 @@ Scénář běží pouze v paměti, nic nezapisuje do localStorage/IndexedDB. Ná
 
 ## Verzování a vydání
 
-Repozitář: https://github.com/MoskitoGrill/PaperSpaceProgram. Uživatel schválil veřejnou testovací verzi. Workflow `.github/workflows/checks.yml` po kontrolách nasazuje větev main na GitHub Pages. V Settings → Pages musí být Source: GitHub Actions. Ruční spuštění: Actions → Checks and test Pages → Run workflow (main). Aktuální výsledek nasazení viz HANDOFF.
+Repozitář: https://github.com/MoskitoGrill/PaperSpaceProgram. Uživatel schválil veřejnou testovací verzi. Workflow `.github/workflows/checks.yml` po kontrolách nasazuje větev main na GitHub Pages. V Settings → Pages musí být Source: GitHub Actions. Ruční spuštění: Actions → Checks and test Pages → Run workflow (main). Nasazení 7ab95de bylo úspěšné a veřejný SYS-001 ověřen; podrobnosti v HANDOFF.
 
 ## Projektové podklady
 
@@ -61,3 +61,4 @@ Další etapa: projednat a ověřit kruhový a eliptický orbitální pohyb. Pro
 `npm run build:pages` vytvoří `dist-pages` s testerem a označením Veřejná testovací sestava. Běžný `npm run build` stále vytváří `dist` bez testeru. Pro lokální prohlídku testovacího buildu: `npm run preview -- --outDir dist-pages`.
 
 Po úspěšném nasazení otevři https://moskitogrill.github.io/PaperSpaceProgram/ a proveď výše uvedený ruční SYS-001. Každý push na main spustí typy, lint, unit testy, oba buildy, kontrolu produkčního artefaktu a E2E. Nasazuje se pouze dist-pages, nikoli zdrojové HTML. Pokud workflow selže, předchozí web se nepřepíše. Na osobní token ani ruční npm při testování webu není potřeba; workflow používá vlastní GITHUB_TOKEN.
+
