@@ -160,3 +160,7 @@ Pokud je produkce katalogu/povrchů příliš velká, rozdělit příslušný V 
 ## Aktualizace chatu 02 — 16. 11. 2026
 
 Kostra T01 je implementována: menu, build ID, izolovaný SYS-001 s ručním krokem a resetem. Skutečné kontroly viz PROJECT_STATE/HANDOFF. Automatický čas a fyzika zůstávají další etapou. Novější pokyn odkládá veřejné vydání do funkčního 2D a kompletního vzhledu; CI obsahuje pouze kontroly, žádný deploy. Následuje domluva kruhové/eliptické orbity v chatu 03.
+
+## Chat 03 — 16. 11. 2026
+
+T03 v rozsahu kruhu/elipsy dokončen lokálně: Keplerovo jádro, ORB-001/002, ruční intervaly a nezávislá numerická akceptace včetně fáze a periody. Viz ADR 0004 a experiments/orbit-03.md. Nejde o celý T02 (FPS/reálný čas) ani T05; následuje domluva T04, nikoli předčasný warp. Aktuální hosting určuje PROJECT_STATE, starší odklady výše byly nahrazeny schválenou veřejnou testovací sestavou.

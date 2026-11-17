@@ -89,3 +89,29 @@ Stav odeslání a vzdáleného nasazení bude přidán po skutečném běhu. Ru�
 Změny pouze v dokumentaci: PROJECT_STATE (akceptace a uzavření), HANDOFF (tento zápis), TEST_SCENARIOS (potvrzení SYS-001) a nový CHAT_03.md (kopírovatelné zadání úvodní domluvy orbitálního pohybu). Žádný herní kód, nový scénář ani změna numerických rozhodnutí. Chat 03 má nejprve domluvit metodu, ovládání a přesnost, nikoli předpokládat schválení starších návrhů.
 
 Kontroly tohoto zápisu: existence cílových souborů, relativní Markdown odkazy a git diff --check; výsledky ověřeny před commitem. Build ani herní testy se kvůli čistě dokumentační změně neopakovaly. Dokumentace se synchronizuje commitem [skip ci], nasazená sestava se nemění.
+
+## 16. 11. 2026 — chat 03: kruhový a eliptický pohyb
+
+**Stav:** lokální implementace dokončena po výslovném „ok, implementuj prosím“ k návrhu. Bez commitu, push a vzdáleného nasazení; stávající veřejný web touto změnou nezměněn.
+
+**Rozhodnutí:** ADR 0004: analytická Keplerova elipsa, planeta μ=3,6e12 / R=600 km, a=1000 km, e=0/0,3; tick/60 a ruční intervaly. Schválené přesnosti včetně fáze a periody doloženy v experiments/orbit-03.md. Žádná nová finální planeta ani tah/warp schváleny implementací.
+
+**Soubory:** nový src/sim/orbit.ts; domain/world.ts (konfigurace a rychlost), sim/step.ts (explicitní bezpečný interval), session/session.ts (posun), render/world.ts (čtecí projekce), devtools/scenario.ts a tester.ts (izolované ORB-001/002, návod, diagnostika, reset a seznam), main.ts (aktuální stav funkcí). tests/unit/orbit.test.ts obsahuje nezávislou Newtonovu ODE+RK4, konvergenci, fázi, periodu, otočenou/zpětnou dráhu, invariants a session kontroly; tests/e2e/orbit.spec.ts plný životní cyklus v dev/Pages. check-production.mjs rozšířen o orbitální fixture identifikátory. Aktualizovány README, PROJECT_STATE, TEST_SCENARIOS, DECISIONS, GDD, ROADMAP, TECHNICAL_PLAN a toto předání. Závislosti a hosting workflow beze změny.
+
+**Skutečně spuštěno:** typecheck OK, lint OK (zopakovány po finální úpravě); unit 9/9 OK. Nezávislá numerická reference po 100,123 periodách: maxima polohy 0,000164281 m, rychlosti 4,65613e-7 m/s, fáze 2,34686e-10 rad. Zjemnění reference ukázalo změnu ≤0,000224257 m / 5,19060e-7 m/s, pod desetinou rozpočtu. RK4 konvergence poměr 16,636. Perioda nezávislého numerického průletu: relativní rozdíl 1,45507e-12. Energie/moment ≤7,76103e-16. Všechny schválené meze splněny; podrobnosti v experimentu.
+
+Běžný build a build:pages OK; node tests/check-production.mjs OK, tester v dist chybí. První E2E pokus uvnitř sandboxu nerozběhl servery a byl ukončen; povolený běh mimo sandbox Chromium 7/7 OK. Po vizuální kontrole screenshotu ORB-002 doplněn reset číselného vstupu na 60 a E2E kontrola návratu po přibližné periodě. Znovu typecheck/lint/build:pages OK a finální Chromium 7/7 OK (SYS-001 regrese, ORB-001/002 v dev a statické podcestě, produkce bez testeru). Screenshot čitelný, bez překryvů; finální screenshot po resetu již obnovuje i interval. Firefox lokálně neopakován kvůli dřívějšímu hostitelskému problému; aktuální orbity tam ani vzdáleným CI neověřeny. Safari/mobil neověřeny. Kontrola relativních Markdown odkazů a git diff --check provedena při uzavření.
+
+**Ruční pokračování:** `node .tools/package/bin/npm-cli.js run dev` → adresa Vite → Vývojový tester → ORB-001 / ORB-002 → Spustit. +60 s; reset a 1655,766 s (půloběh); reset a 3311,529 s (téměř oběh); záporný interval odmítnout; reset/menu/nové spuštění od nuly. Prohlížeč může chtít desetinnou tečku. Přesný postup a očekávání v TEST_SCENARIOS. SYS-001 zůstává stejný. Ruční čas se zaokrouhluje na tick, proto návrat po zadané přibližné periodě není centimetrový test propagátoru.
+
+**Další úkol:** uživatelská akceptace ORB-001/002, pak samostatně projednat chat 04 (tah, palivo, měnící se hmotnost, orientace, HUD). Nepředjímat integrátor s tahem, hyperboly, bezpečný warp ani editor. Případné vzdálené zveřejnění znamená push na main s existujícím CI; v tomto chatu neprovedeno.
+
+## 17. 11. 2026 — ruční akceptace a uzavření chatu 03
+
+**Stav: dokončeno.** Uživatel po vysvětlení změn rychlosti na elipse potvrdil, že ORB-001 i ORB-002 prošly a jsou otestované. Zapsáno jako souhrnná ruční akceptace obou scénářů; konkrétní prohlížeč, jednotlivé kroky ani nové ověření SYS-001 nebyly uvedeny. Žádný nový problém nehlásí. Automatické výsledky z implementace zůstávají doložené v předchozím zápisu.
+
+Aktualizovány pouze PROJECT_STATE (akceptace a další krok), TEST_SCENARIOS (ruční potvrzení) a HANDOFF (tento zápis). Herní kód ani produktová rozhodnutí se nemění; žádný commit/push/nasazení neproveden. Kontrola zápisu: git diff --check; herní testy a build se pro tuto dokumentační změnu neopakují.
+
+Při spouštění z uživatelova PowerShellu nebyl Node v PATH. V této relaci se použil Node z balíčku CodexPrimaryRuntime; konkrétní verzovaná cesta není trvalá instalační záruka. V případě opakování zjistit aktuální cestu nebo použít samostatnou instalaci Node. Tento problém nebránil následné uživatelské akceptaci scénářů.
+
+Další samostatný chat 04: nejprve projednat tah, palivo, hmotnost, orientaci a HUD včetně metody integrace a akceptačních mezí; teprve po domluvě implementovat. Warp, editor, hyperboly ani nové nasazení tím nejsou automaticky schváleny.

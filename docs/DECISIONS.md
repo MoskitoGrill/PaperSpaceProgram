@@ -98,3 +98,7 @@ Volba 2D zůstává neaktivní bez štítku Připravujeme; u 2D/3D může štít
 ## 16. 11. 2026 — veřejný tester na Pages (schváleno)
 
 Uživatel výslovně přijal veřejnou testovací verzi a poskytl repozitář https://github.com/MoskitoGrill/PaperSpaceProgram. To nahrazuje odložení veškerého zveřejnění: oddělený build:pages smí obsahovat tester SYS-001 a nasazovat se z main. Běžný produkční build zůstává bez testeru, vydání hotové hry se tím neprohlašuje. Žádné přihlašování, backend nebo herní mechaniky navíc.
+
+## 16. 11. 2026 — chat 03: schválený orbitální model
+
+Uživatel po projednání výslovně schválil analytický Keplerův pohyb, ruční intervaly, parametry reference, ORB-001/002 a numerické meze. Viz [ADR 0004](adr/0004-orbit-motion.md). Nejde o schválení finální soustavy ani budoucího režimu s tahem.

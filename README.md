@@ -1,6 +1,6 @@
 # PaperSpaceProgram
 
-Lokální webová kostra budoucího 2D sandboxu. Dostupné jsou menu a vývojový tester SYS-001; let, fyzika ani ukládání ještě neexistují.
+Orbitální prototyp budoucího 2D sandboxu: menu, SYS-001 a lokální ORB-001/002 (kruh/elipsa) s ručním časem. Bez tahu a ukládání. Aktuální změna zatím není nasazena; veřejný web dosud obsahuje SYS-001.
 
 ## Spuštění
 
@@ -53,7 +53,7 @@ Repozitář: https://github.com/MoskitoGrill/PaperSpaceProgram. Uživatel schvá
 - [Rozhodnutí](docs/DECISIONS.md), [rozsah kostry](docs/adr/0003-first-web-shell.md)
 - [Roadmapa](docs/ROADMAP.md), [technický plán](docs/TECHNICAL_PLAN.md), [výtvarná identita](docs/VISUAL_IDENTITY.md)
 
-Další etapa: projednat a ověřit kruhový a eliptický orbitální pohyb. Prostorová fyzika a finální výtvarná produkce patří do pozdějších etap.
+Další etapa: projednat tah, palivo, hmotnost, orientaci a HUD. Prostorová fyzika a finální výtvarná produkce patří do pozdějších etap.
 
 
 ## Veřejná testovací sestava na GitHub Pages
@@ -61,4 +61,11 @@ Další etapa: projednat a ověřit kruhový a eliptický orbitální pohyb. Pro
 `npm run build:pages` vytvoří `dist-pages` s testerem a označením Veřejná testovací sestava. Běžný `npm run build` stále vytváří `dist` bez testeru. Pro lokální prohlídku testovacího buildu: `npm run preview -- --outDir dist-pages`.
 
 Po úspěšném nasazení otevři https://moskitogrill.github.io/PaperSpaceProgram/ a proveď výše uvedený ruční SYS-001. Každý push na main spustí typy, lint, unit testy, oba buildy, kontrolu produkčního artefaktu a E2E. Nasazuje se pouze dist-pages, nikoli zdrojové HTML. Pokud workflow selže, předchozí web se nepřepíše. Na osobní token ani ruční npm při testování webu není potřeba; workflow používá vlastní GITHUB_TOKEN.
+
+
+## Orbitální scénáře (chat 03)
+
+Spusť vývojový server, otevři Vývojový tester a zvol ORB-001 nebo ORB-002. Návod je vidět před spuštěním i během běhu. +60 s posune loď; reset vrací celý svět. Po resetu zadej 1655,766 s pro polovinu oběhu, po dalším resetu 3311,529 s pro téměř celý oběh; prohlížeč může vyžadovat desetinnou tečku. Kruh drží vzdálenost 1000 km, elipsa střídá 700/1300 km a mění rychlost. Přesné krokové návody v [katalogu](docs/TEST_SCENARIOS.md), meze a skutečná měření v [experimentu](docs/experiments/orbit-03.md).
+
+Aktuální kontroly: 9 unit testů, typy, lint, oba buildy, kontrola dist a 7 Chromium E2E prošlo. Starší výsledky výše patří kostře. Nové orbity ve Firefoxu/Safari nebyly ověřeny. Nasazení se v tomto chatu neprovádí.
 

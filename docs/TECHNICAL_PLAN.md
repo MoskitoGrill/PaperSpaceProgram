@@ -186,3 +186,7 @@ Později rozhodnout: konkrétní limity návratů (přitom musí umožnit scén�
 ## Aktualizace chatu 02 — 16. 11. 2026
 
 Implementován pouze minimální domain WorldState, čistý krok ticku, Session s resetem/snapshotem, renderer Canvas a vývojový SYS-001. Stav a výsledky jsou v PROJECT_STATE/HANDOFF. Automatický čas, síly a jiné budoucí moduly nevznikly. Build base je relativní, tester importovaný jen pod `import.meta.env.DEV`; obsah dist kontroluje samostatný skript. Novější pokyn odkládá zveřejnění až na funkční 2D a kompletní vzhled, proto aktuální workflow pouze kontroluje a nemá deploy.
+
+## Chat 03 — 16. 11. 2026
+
+Přijat a implementován omezený analytický eliptický Keplerův solver (nikoli dosud univerzální proměnná). Domain obsahuje SI konfiguraci orbity a rychlost, sim propaguje od epochy, session postupuje po explicitních ticích, render pouze čte. RK4 je nezávislá testovací reference, ne další produkční režim. Meze, rozsah a výsledky viz ADR 0004 a experiments/orbit-03.md. Hyperboly, hybridní přepínání a numerika s tahem čekají na další etapy. Veřejný tester nyní schválen samostatným Pages buildem; starší formulace o nepřítomnosti testeru ve veřejném artefaktu platí pro běžný dist.

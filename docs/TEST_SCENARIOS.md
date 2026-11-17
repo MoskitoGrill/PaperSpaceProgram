@@ -1,6 +1,6 @@
 # Katalog scénářů vývojového testeru
 
-Stav k 16. 11. 2026: SYS-001 je implementovaný v lokálním vývojovém testeru. Ostatní scénáře zůstávají plánované. Výsledky skutečně provedených kontrol jsou v PROJECT_STATE a HANDOFF.
+Stav k 16. 11. 2026: SYS-001 a ORB-001/002 jsou dostupné lokálně. Orbitální změna zatím není nasazena. Ostatní scénáře zůstávají plánované. Výsledky skutečně provedených kontrol jsou v PROJECT_STATE a HANDOFF.
 
 ## Pravidla testeru
 
@@ -28,7 +28,8 @@ Upřesnění z chatu 01: tester průběžně shromažďuje všechny relevantní 
 | ID | Účel a připravený stav | Stav / vznikne při |
 | --- | --- | --- |
 | SYS-001 | Spuštění a reset izolovaného testovacího světa | Dostupný – lokální vývojová kostra |
-| ORB-001 | Loď už na kruhové orbitě, kontrola stability | Plánovaný – orbitální jádro |
+| ORB-001 | Loď na kruhové orbitě, stabilita a fáze | Dostupný lokálně – chat 03 |
+| ORB-002 | Loď na eliptické orbitě, rychlost, fáze a perioda | Dostupný lokálně – chat 03 |
 | FLT-001 | Připravený zážeh s přesně danou zásobou paliva | Plánovaný – řízení |
 | TIME-001 | Dvě lodě připravené pro přepnutí a warp | Plánovaný – více lodí |
 | SAVE-001 | Stav před událostí a uprostřed zážehu | Plánovaný – ukládání |
@@ -69,3 +70,38 @@ U VIS-PLANET-001 budoucí postup ověří vzdálenou kresbu, přiblížení k pr
 Po úspěšném workflow je cesta https://moskitogrill.github.io/PaperSpaceProgram/ → Vývojový tester → Spustit. Proveď stejné číslované kroky 1–5 výše: tick 0 → 3 kroky = 0,05 s → úplný reset → nové spuštění od nuly. Menu navíc označuje Veřejná testovací sestava a build ID končí -test. Stav skutečného vzdáleného nasazení viz PROJECT_STATE/HANDOFF. Automatický E2E pro Pages build provádí celý stejný životní cyklus a kontroluje i načítání dynamického tester modulu v podadresáři, chyby stránky a čisté úložiště.
 
 **Uživatelské ověření 16. 11. 2026:** po nasazení veřejné verze uživatel potvrdil, že funguje. Souhrnné potvrzení bez specifikace prohlížeče a jednotlivých kroků; žádný nový problém nehlásí. Automatické výsledky jsou samostatně v HANDOFF.
+
+## ORB-001 — Kruhová dráha
+
+- **Stav:** dostupný lokálně, 16. 11. 2026, chat 03; aktuální změna zatím nenasazena.
+- **Režim / účel:** 2D; produkční Keplerův pohyb, kruhová stabilita, čas a fáze.
+- **Cesta:** `npm run dev` (zde také `node .tools/package/bin/npm-cli.js run dev`) → adresa Vite → Vývojový tester → ORB-001 → Spustit. Alternativně `npm run build:pages` a `npm run preview -- --outDir dist-pages`.
+- **Výchozí stav:** tick 0, planeta na (0,0), μ=3,6e12 m³/s², poloměr 600 km; loď na (1000000,0) m, rychlost (0,1897,366596) m/s, a=1000 km, e=0. Pevná kamera, pouze ruční čas, bez zdrojů/historie/uložení. Izolovaná session.
+
+1. Vyber ORB-001 a přečti čtyři kroky před spuštěním. Canvas je skrytý. Spustit zobrazí loď vpravo a čas 0 s.
+2. Provést jeden krok: tick 1, čas přibližně 0,016667 s. +60 s přidá dalších 3600 ticků. Loď postupuje proti směru hodin, vzdálenost stále 1000 km a rychlost přibližně 1897,367 m/s.
+3. Reset scénáře → zadej do Posun v sekundách 1655,766 (prohlížeč může vyžadovat desetinnou tečku) → Posunout čas. Loď je vlevo, vzdálenost stále 1000 km. Čas 1655,766667 s.
+4. Reset → zadej 3311,529 → Posunout čas. Loď téměř na počátku; skutečný čas 3311,533333 s se liší od periody 3311,529421932 s zaokrouhlením na tick. Není požadován centimetrový návrat z tohoto zaokrouhleného UI vstupu.
+5. Zadej záporný interval → Posunout čas. Chyba je vidět a čas/poloha se nezmění. Reset obnoví svět, interval 60 a odstraní chybu.
+6. Zpět do menu → Vývojový tester → ORB-001 → Spustit: nový tick 0 a stejné výchozí zobrazení. Seznam scénářů umožní přejít na SYS-001 nebo ORB-002.
+
+**Úspěch:** popsané pohyby/hodnoty, relativní odchylky energie a momentu do 1e-8, stabilní reset bez zápisu úložiště. Automatická přesnost polohy, rychlosti, periody a fáze podle ADR 0004, nikoli podle pixelů. Automatizace: unit a Chromium E2E dev/Pages. Firefox/Safari aktuálně neověřeny. Obraz je provizorní.
+
+## ORB-002 — Eliptická dráha
+
+- **Stav:** dostupný lokálně, 16. 11. 2026, chat 03; aktuální změna zatím nenasazena.
+- **Režim / účel:** 2D; správná proměnlivá rychlost a fáze eliptického Keplerova pohybu.
+- **Cesta:** `npm run dev` → adresa Vite → Vývojový tester → ORB-002 → Spustit. Stejná lokální Pages alternativa jako ORB-001.
+- **Výchozí stav:** stejné těleso a a=1000 km; e=0,3, periapsida 700 km / apoapsida 1300 km od středu. Tick 0, loď (700000,0) m, rychlost (0,2585,674822) m/s, pohyb proti směru hodin. Žádné zdroje/historie/uložení, izolovaný svět, pevná kamera, ruční čas.
+
+1. Před spuštěním přečti návod. Spustit: loď vpravo v periapsidě, vzdálenost 700 km, rychlost přibližně 2585,675 m/s.
+2. +60 s: loď se pohne nahoru, vzdálenost roste a rychlost klesá. Není to rovnoměrné objíždění nakreslené elipsy.
+3. Reset → zadej 1655,766 → Posunout čas. Loď vlevo poblíž apoapsidy, vzdálenost přibližně 1300 km, rychlost přibližně 1392,286 m/s.
+4. Reset → zadej 3311,529 → Posunout čas. Téměř původní poloha a rychlost; stejná perioda jako kruh. Čas zaokrouhlený na tick; platí stejné omezení ručního zadání jako u ORB-001.
+5. Záporný posun odmítnut beze změny světa. Reset obnoví tick 0, periapsidu, interval 60 a odstraní chybu. Návrat do menu a nové spuštění opět začnou od nuly.
+
+**Úspěch:** pozorované hodnoty i proměnlivá rychlost, relativní energie/moment ≤1e-8, izolace/reset. Fáze a perioda ověřeny nezávislou RK4 referencí v automatických testech; diagnostika v aplikaci samotná není nezávislým důkazem. Podrobné meze a měření: [experiment](experiments/orbit-03.md). Chromium E2E ověřuje oba buildy; další prohlížeče aktuálně neověřeny. Renderer pouze čte; žádné přepisování běžných světů.
+
+## Uživatelská akceptace ORB-001/002 — 17. 11. 2026
+
+Uživatel potvrdil: „oba scénáře prošli a jsou otestované“. ORB-001 a ORB-002 jsou ručně akceptované. Jde o souhrnné potvrzení obou scénářů bez určení prohlížeče nebo samostatných výsledků jednotlivých kroků. Žádný nový problém nebyl nahlášen. Automatické výsledky zůstávají odděleně doložené v HANDOFF a experimentu; potvrzení neznamená nové ověření SYS-001 ani vzdálené nasazení.

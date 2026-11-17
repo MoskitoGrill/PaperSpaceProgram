@@ -1,0 +1,43 @@
+import { test, expect } from '@playwright/test';
+for (const url of ['/', 'http://127.0.0.1:4173/testing/PaperSpaceProgram/']) {
+  for (const id of ['ORB-001', 'ORB-002']) test(`${id} lifecycle ${url}`, async ({ page }, info) => {
+    const errors: string[] = [];
+    page.on('pageerror', e => errors.push(e.message));
+    page.on('response', r => { if (r.status() >= 400) errors.push(r.url()); });
+    await page.goto(url);
+    await page.getByRole('button', { name: 'Vývojový tester' }).click();
+    await page.getByRole('button', { name: id, exact: true }).click();
+    await expect(page.getByRole('listitem')).toHaveCount(4);
+    await expect(page.locator('canvas')).toBeHidden();
+    await page.getByRole('button', { name: 'Spustit', exact: true }).click();
+    const initial = await page.locator('canvas').evaluate(c => (c as HTMLCanvasElement).toDataURL());
+    await page.getByRole('button', { name: '+60 s', exact: true }).click();
+    await expect(page.getByRole('status')).toHaveText('Tick: 3600 · Čas: 60 s');
+    expect(await page.locator('canvas').evaluate(c => (c as HTMLCanvasElement).toDataURL())).not.toBe(initial);
+    await page.getByRole('button', { name: 'Reset scénáře' }).click();
+    await page.getByLabel('Posun v sekundách').fill('1655.766');
+    await page.getByRole('button', { name: 'Posunout čas' }).click();
+    await expect(page.locator('#telemetry')).toContainText(id === 'ORB-001' ? '1000.000000' : '1300.000000');
+    await page.getByRole('button', { name: 'Reset scénáře' }).click();
+    await page.getByLabel('Posun v sekundách').fill('3311.529');
+    await page.getByRole('button', { name: 'Posunout čas' }).click();
+    await expect(page.locator('#telemetry')).toContainText(id === 'ORB-001' ? 'Poloha: (1000000.000,' : 'Poloha: (700000.000,');
+    await page.getByLabel('Posun v sekundách').fill('-2');
+    const status = await page.getByRole('status').textContent();
+    await page.getByRole('button', { name: 'Posunout čas' }).click();
+    await expect(page.getByRole('alert')).not.toBeEmpty();
+    await expect(page.getByRole('status')).toHaveText(status!);
+    await page.getByRole('button', { name: 'Reset scénáře' }).click();
+    await expect(page.getByRole('status')).toHaveText('Tick: 0 · Čas: 0 s');
+    expect(await page.locator('canvas').evaluate(c => (c as HTMLCanvasElement).toDataURL())).toBe(initial);
+    await page.screenshot({ path: info.outputPath(`${id}.png`), fullPage: true });
+    await page.getByRole('button', { name: 'Zpět do menu' }).click();
+    await page.getByRole('button', { name: 'Vývojový tester' }).click();
+    await page.getByRole('button', { name: id, exact: true }).click();
+    await page.getByRole('button', { name: 'Spustit', exact: true }).click();
+    await expect(page.getByRole('status')).toHaveText('Tick: 0 · Čas: 0 s');
+    expect(await page.evaluate(() => localStorage.length)).toBe(0);
+    expect(await page.evaluate(async () => (await indexedDB.databases()).length)).toBe(0);
+    expect(errors).toEqual([]);
+  });
+}

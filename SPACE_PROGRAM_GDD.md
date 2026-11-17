@@ -484,3 +484,7 @@ SCHVÁLENO uživatelem: nedostupné 2D tlačítko bez označení Připravujeme, 
 ### 17.7 Veřejná testovací verze na Pages — 16. 11. 2026
 
 SCHVÁLENO uživatelem: veřejná pracovní verze s testerem pro pohodlné testování přes odkaz. Samostatný Pages build, běžný produkční build stále bez testeru. Nahrazuje odložení zveřejnění pracovní kostry v §17.6, nikoli požadavek dokončit funkční 2D a vzhled pro hotové vydání. Repozitář MoskitoGrill/PaperSpaceProgram, automatické nasazení po kontrolách main.
+
+### 17.8 Orbitální prototyp, chat 03 — 16. 11. 2026
+
+Schválen uživatelem po projednání: jedna referenční planeta, předdefinovaná loď, kruh a elipsa bez tahu; analytický Keplerův propagátor, ruční čas po ticku/60, +60 s a zadaný interval. Parametry testovacího tělesa nejsou finální soustava. Přesnost a nezávislé reference podle [ADR 0004](docs/adr/0004-orbit-motion.md). Implementovány izolované ORB-001/002, produkční jádro oddělené od rendereru, zachovaný SYS-001. Automatický čas/warp, tah a hyperbolické dráhy nejsou tímto krokem dokončeny.
